@@ -1,0 +1,156 @@
+<section class="navigation">
+  <div class="nav-container">
+      <div class="brand">
+          <img class="epsLogo" src="/assets/img/epsLogo.png">
+      </div>
+  </div>
+</section>
+
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="firstFormGroup" completed>
+      <div class="first-form">
+          <div class="wrapp">
+              <form [formGroup]="firstFormGroup" (ngSubmit)="onSubmitED()">
+                  <ng-template matStepLabel>Унос Вашег ЕД броја</ng-template>
+                  <mat-form-field class="example-full-width-ed" appearance="outline">
+                      <mat-label>Унесите Ваш ЕД број</mat-label>
+                      <input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" matInput placeholder="ЕД број" name="ed_broj" formControlName="ed_broj">
+                  </mat-form-field>
+
+                  <!-- <mat-form-field class="example-full-width">
+          <input type="text"
+                 placeholder="Pick one"
+                 aria-label="Number"
+                 matInput
+                 [formControl]="myControl"
+                 [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field> -->
+
+                  <div class="btn-between">
+                      <!-- <button mat-raised-button color="primary matStepperNext"> Posalji  </button> -->
+                      <button mat-raised-button color="primary">Следећи корак</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </mat-step>
+  <mat-step [stepControl]="secondFormGroup">
+      <div class="head-text">
+          <span>
+      Подаци о власнику, бројилу и потрошњи у kWh
+    </span>
+      </div>
+      <div class="first-form second">
+          <div class="wrapp">
+              <form #f="ngForm" (ngSubmit)="onSubmit()">
+                  <ng-template matStepLabel>
+                      Подаци о власнику, бројилу и потрошњи у kWh
+                  </ng-template>
+                  <div class="inside-form">
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>Име</mat-label>
+                          <input disabled matInput placeholder="Име" name="ime" [(ngModel)]="allValues.ime">
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>Презиме</mat-label>
+                          <input disabled matInput placeholder="Презиме" name="prezime" [(ngModel)]="allValues.prezime">
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>Адреса</mat-label>
+                          <input disabled matInput placeholder="Адреса" name="adresa" [(ngModel)]="allValues.adresa">
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>Дистрибутивни центар</mat-label>
+                          <input disabled matInput placeholder="Центар" name="centar" [(ngModel)]="allValues.centar">
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>Сектор</mat-label>
+                          <input disabled matInput placeholder="Сектор" name="sektor" [(ngModel)]="allValues.sektor">
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>ЕД број</mat-label>
+                          <input disabled matInput placeholder="ЕД број" name="ed_broj" [(ngModel)]="allValues.ed_broj">
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>Фабрички број мерног уређаја</mat-label>
+                          <input disabled matInput required name="fabricki_broj" [(ngModel)]="allValues.fabricki_broj">
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width" appearance="outline">
+                          <mat-label>Стање kWh у вишој тарифи</mat-label>
+                          <input disabled matInput placeholder="Виша тарифа" name="avt_kwh" [(ngModel)]="allValues.avt_kwh">
+                      </mat-form-field>
+
+                      <mat-form-field class="example-full-width" appearance="outline" *ngIf="allValues.broj_tarifa === 2">
+                          <mat-label>Стање kWh у нижој тарифи</mat-label>
+                          <input disabled matInput placeholder="N" name="ant_kwh" [(ngModel)]="allValues.ant_kwh">
+                      </mat-form-field>
+                  </div>
+                  <div class="btn-between">
+                      <button mat-button mat-raised-button color="primary" matStepperPrevious> Претходни корак </button>
+                      <button mat-raised-button color="primary" matStepperNext>Следећи корак</button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </mat-step>
+  <mat-step>
+      <div class="head-text">
+          <span>
+    Унос новог стања у kWh
+    </span>
+      </div>
+      <div class="first-form second">
+          <div class="wrapp">
+              <form #form="ngForm" (ngSubmit)="onSubmit2()">
+                  <ng-template matStepLabel>
+                      Унос новог стања у kWh
+                  </ng-template>
+
+                  <mat-form-field class="example-full-width-input" appearance="outline">
+                      <mat-label>Изаберите датум очитавања новог стања</mat-label>
+
+                      <input (click)="date.open()" id="vreme" required name="vreme" matInput [matDatepicker]="date" name="vreme" [(ngModel)]="vreme">
+                      <mat-datepicker-toggle matSuffix [for]="date"></mat-datepicker-toggle>
+                      <mat-datepicker touchUi #date></mat-datepicker>
+                  </mat-form-field>
+
+                  <mat-form-field class="example-full-width-input" appearance="outline">
+                      <mat-label>Упишите стање у kWh за вишу тарифу</mat-label>
+                      <input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" id="novaVisaTarifa" required matInput placeholder="Ново стање у kWh" name="novaVisaTarifa" [(ngModel)]="novaVisaTarifa">
+                  </mat-form-field>
+
+                  <!-- <mat-form-field class="example-full-width-input" appearance="outline">
+          <mat-label>Упишите стање у kWh за нижу тарифу</mat-label>
+          <input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" id="novaNizaTarifa" required matInput placeholder="Ново стање у kWh"  name="novaNizaTarifa" [(ngModel)]="novaNizaTarifa">
+        </mat-form-field> -->
+
+                  <mat-form-field class="example-full-width-input" appearance="outline" *ngIf="allValues.broj_tarifa === 2">
+                      <mat-label>Упишите стање у kWh за нижу тарифу</mat-label>
+                      <input type="number" min="0" onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" id="novaNizaTarifa" required matInput placeholder="Ново стање у kWh" name="novaNizaTarifa" [(ngModel)]="novaNizaTarifa">
+                  </mat-form-field>
+                  <!-- </div> -->
+                  <div class="btn-between">
+                      <!-- <button mat-button mat-raised-button color="primary"  type="submit"> submit </button> -->
+                      <button mat-button mat-raised-button color="primary" matStepperPrevious> Претходни корак </button>
+                      <!-- <button mat-raised-button color="primary"> Пошаљите форму </button> -->
+                      <button mat-raised-button color="primary"> Пријавите ново стање </button>
+                  </div>
+              </form>
+          </div>
+      </div>
+  </mat-step>
+</mat-horizontal-stepper>
+<router-outlet></router-outlet>
